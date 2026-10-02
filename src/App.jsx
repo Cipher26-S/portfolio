@@ -1,24 +1,25 @@
-import Navbar from './components/Navbar';
+import Nav from './components/Nav';
 import Hero from './components/Hero';
 import About from './components/About';
-import Skills from './components/Skills';
-import Services from './components/Services';
 import Projects from './components/Projects';
-import Education from './components/Education';
+import Skills from './components/Skills';
+import Journey from './components/Journey';
+import Loom from './components/Loom';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
 function App() {
   return (
     <>
-      <Navbar />
+      <a href="#projects" className="sr-only">Aller aux réalisations</a>
+      <Nav />
       <main>
         <Hero />
         <About />
         <Projects />
         <Skills />
-        <Services />
-        <Education />
+        <Journey />
+        <Loom />
         <Contact />
       </main>
       <Footer />

@@ -1,0 +1,45 @@
+.weave {
+  position: relative;
+  height: var(--weave-h);
+  overflow: hidden;
+}
+
+/* Chaîne : les fils verticaux */
+.weave::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--warp);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.9s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* Trame : le fil horizontal qui passe, puis le grain du tissage */
+.weave::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.14) 0 1px, transparent 1px 3px),
+    var(--weft);
+  opacity: 0.38;
+  mix-blend-mode: multiply;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1.1s cubic-bezier(0.65, 0, 0.35, 1) 0.55s;
+}
+
+.weave--woven::before {
+  transform: scaleY(1);
+}
+
+.weave--woven::after {
+  clip-path: inset(0 0 0 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .weave::before,
+  .weave::after {
+    transition: none;
+  }
+}

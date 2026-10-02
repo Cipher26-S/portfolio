@@ -15,15 +15,15 @@ export const profile = {
   github: 'https://github.com/Cipher26-S',
   linkedin: 'https://www.linkedin.com/in/salif-sawadogo-348081375',
   cvPath: asset('cv.pdf'),
-  availability: 'Disponible pour un stage ou un premier emploi',
+  tagline: 'Je tisse du code qui sert les gens.',
   lead:
     "Je conçois des applications web et mobiles complètes, de l'API à l'interface, avec une attention particulière à la qualité du code, aux tests et aux besoins réels des utilisateurs au Burkina Faso.",
-  bio: "Étudiant en troisième année de Licence Informatique (Programmation et Entrepreneuriat) au Burkina Institute of Technology, je développe des applications sur toute la chaîne : API REST avec Node.js ou FastAPI, bases PostgreSQL et MongoDB, interfaces React et applications mobiles Flutter. Deux stages chez Telia Informatique m'ont fait découvrir le développement en entreprise. Mon projet de fin d'études, FasoConnect, met en relation des clients avec des artisans qualifiés.",
+  bio: "Diplômé d'une Licence en Informatique (Programmation et Entrepreneuriat) du Burkina Institute of Technology, je développe des applications sur toute la chaîne : API REST avec Node.js ou FastAPI, bases PostgreSQL et MongoDB, interfaces React et applications mobiles Flutter. Deux stages chez Telia Informatique m'ont fait découvrir le développement en entreprise. Comme un tisserand assemble ses fils, j'assemble API, données et interfaces pour qu'elles tiennent ensemble — et servent vraiment.",
   facts: [
-    { label: 'Formation', value: 'Licence Informatique — BIT, 2026' },
+    { label: 'Diplôme', value: 'Licence en Informatique — BIT, 2026' },
     { label: 'Localisation', value: 'Koudougou, Burkina Faso' },
     { label: 'Langues', value: 'Français, Mooré, Anglais (intermédiaire)' },
-    { label: 'Recherche', value: 'Stage ou premier emploi en développement' },
+    { label: 'Spécialités', value: 'Web, mobile, API et intégration IA' },
   ],
   stats: [
     { value: '5', label: 'Projets publiés' },
@@ -76,9 +76,11 @@ export const services = [
 
 // category : 'web' | 'mobile' | 'ia' — sert aux filtres de la section Projets
 // images : kind 'phone' (capture mobile) ou 'desktop' (capture navigateur)
+// colors : palette du « pagne » propre à chaque projet
 export const projects = [
   {
     name: 'FasoConnect',
+    colors: ['#b8432a', '#d9922b', '#1d2a5e', '#f4ead8', '#121a40'],
     tag: "Projet de fin d'études",
     categories: ['web', 'mobile'],
     featured: true,
@@ -101,6 +103,7 @@ export const projects = [
   },
   {
     name: 'CV AI Assistant',
+    colors: ['#1d2a5e', '#2f6b4f', '#d9922b', '#f4ead8', '#121a40'],
     tag: 'Intelligence artificielle',
     categories: ['web', 'ia'],
     description:
@@ -117,6 +120,7 @@ export const projects = [
   },
   {
     name: 'TontiFaso Mobile',
+    colors: ['#2f6b4f', '#d9922b', '#f4ead8', '#1c1712', '#b8432a'],
     tag: 'Application mobile · Fintech',
     categories: ['mobile'],
     description:
@@ -136,6 +140,7 @@ export const projects = [
   },
   {
     name: 'Restaurant Reservation System',
+    colors: ['#b8432a', '#1c1712', '#d9922b', '#e7d6b8', '#2f6b4f'],
     tag: 'Application web',
     categories: ['web'],
     description:
@@ -154,6 +159,7 @@ export const projects = [
   },
   {
     name: 'Delivery Driver Tracker',
+    colors: ['#121a40', '#d9922b', '#1d2a5e', '#e7d6b8', '#b8432a'],
     tag: 'Application mobile',
     categories: ['mobile'],
     description:
@@ -192,7 +198,7 @@ export const experience = [
 
 export const education = [
   {
-    period: '2023 — 2026',
+    period: '2023 — 2026 · Diplôme obtenu',
     title: 'Licence en Informatique — Programmation et Entrepreneuriat',
     place: 'Burkina Institute of Technology (BIT), Koudougou',
     description: "Développement logiciel, algorithmique, bases de données, génie logiciel et entrepreneuriat. Projet de fin d'études : FasoConnect.",
@@ -206,10 +212,9 @@ export const education = [
 ];
 
 export const navLinks = [
-  { label: 'Accueil', href: '#home' },
   { label: 'À propos', href: '#about' },
-  { label: 'Projets', href: '#projects' },
-  { label: 'Compétences', href: '#skills' },
+  { label: 'Réalisations', href: '#projects' },
   { label: 'Parcours', href: '#journey' },
+  { label: 'Tissez votre pagne', href: '#loom' },
   { label: 'Contact', href: '#contact' },
 ];

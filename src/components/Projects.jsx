@@ -1,24 +1,23 @@
 import { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { FaGithub, FaExternalLinkAlt, FaCheck } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 import { projects, projectFilters } from '../data/content';
+import Reveal from './Reveal';
+import Weave from './Weave';
 import './Projects.css';
 
-function Shots({ images, max = 2 }) {
-  const shown = images.slice(0, max);
-  if (shown[0]?.kind === 'desktop') {
-    const img = shown[0];
+function Shots({ images }) {
+  if (images[0].kind === 'desktop') {
     return (
-      <div className="browser">
-        <div className="browser__bar"><span /><span /><span /></div>
-        <img src={img.src} alt={img.alt} loading="lazy" />
+      <div className="shot-browser">
+        <div className="shot-browser__bar"><span /><span /><span /></div>
+        <img src={images[0].src} alt={images[0].alt} loading="lazy" />
       </div>
     );
   }
   return (
-    <div className="phones">
-      {shown.map((img) => (
-        <div key={img.src} className="phone">
+    <div className="shot-phones">
+      {images.slice(0, 2).map((img) => (
+        <div key={img.src} className="shot-phone">
           <img src={img.src} alt={img.alt} loading="lazy" />
         </div>
       ))}
@@ -26,141 +25,78 @@ function Shots({ images, max = 2 }) {
   );
 }
 
-function Links({ project }) {
+function Project({ project, index }) {
   return (
-    <div className="project-card__links">
-      {project.github ? (
-        <a href={project.github} target="_blank" rel="noreferrer" className="project-card__link">
-          <FaGithub /> Code source
-        </a>
-      ) : (
-        <span className="project-card__link project-card__link--disabled">
-          <FaGithub /> Bientôt disponible
-        </span>
-      )}
-      {project.demo && (
-        <a href={project.demo} target="_blank" rel="noreferrer" className="project-card__link">
-          <FaExternalLinkAlt /> Démo
-        </a>
-      )}
-    </div>
-  );
-}
+    <Reveal as="article" className={`work ${index % 2 ? 'work--flip' : ''}`}>
+      <div className="work__visual">
+        <Weave seed={project.name} colors={project.colors} height={16} scale={3} className="work__weave" />
+        <div className="work__stage" style={{ '--accent': project.colors[0] }}>
+          {project.logo && <img className="work__logo" src={project.logo} alt={`Logo ${project.name}`} loading="lazy" />}
+          <Shots images={project.images} />
+        </div>
+      </div>
 
-function Tech({ items }) {
-  return (
-    <div className="project-card__tech">
-      {items.map((t) => (
-        <span key={t} className="project-card__tech-item">{t}</span>
-      ))}
-    </div>
-  );
-}
-
-function Featured({ project }) {
-  return (
-    <motion.article
-      className="featured"
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.15 }}
-      transition={{ duration: 0.7 }}
-    >
-      <div className="featured__body">
-        <img className="featured__logo" src={project.logo} alt={`Logo ${project.name}`} loading="lazy" />
-        <span className="project-card__tag">{project.tag}</span>
-        <h3 className="featured__title">{project.name}</h3>
-        <p className="project-card__desc">{project.description}</p>
-        <ul className="highlights">
+      <div className="work__body">
+        <span className="work__num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+        <p className="work__tag">{project.tag}</p>
+        <h3 className="work__title">{project.name}</h3>
+        <p className="work__desc">{project.description}</p>
+        <ul className="work__points">
           {project.highlights.map((h) => (
-            <li key={h}><FaCheck /> {h}</li>
+            <li key={h}>{h}</li>
           ))}
         </ul>
-        <Tech items={project.tech} />
-        <Links project={project} />
+        <ul className="work__tech" aria-label="Technologies">
+          {project.tech.map((t) => (
+            <li key={t}>{t}</li>
+          ))}
+        </ul>
+        <div className="work__links">
+          <a href={project.github} target="_blank" rel="noreferrer" className="btn btn--light">
+            <FaGithub /> Code source
+          </a>
+          {project.demo && (
+            <a href={project.demo} target="_blank" rel="noreferrer" className="btn btn--ocre">
+              <FaExternalLinkAlt /> Démo
+            </a>
+          )}
+        </div>
       </div>
-      <div className="featured__visual">
-        <Shots images={project.images} />
-      </div>
-    </motion.article>
+    </Reveal>
   );
 }
 
 export default function Projects() {
   const [filter, setFilter] = useState('all');
-  const featured = projects.find((p) => p.featured);
-  const visible = projects.filter(
-    (p) => !p.featured && (filter === 'all' || p.categories.includes(filter))
-  );
-  const showFeatured = featured && (filter === 'all' || featured.categories.includes(filter));
+  const visible = projects.filter((p) => filter === 'all' || p.categories.includes(filter));
 
   return (
     <section id="projects" className="section projects">
       <div className="container">
-        <motion.div
-          className="skills__head"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.6 }}
-        >
-          <span className="eyebrow">Mes réalisations</span>
-          <h2 className="section-title">
-            Projets <span className="accent">sélectionnés</span>
-          </h2>
-          <p className="section-lead">
-            Des applications complètes, testées et documentées, du back-end au mobile.
-          </p>
-        </motion.div>
+        <Reveal className="projects__head">
+          <div>
+            <span className="kicker">Réalisations</span>
+            <h2 className="title">Chaque projet, <em>un pagne</em> différent.</h2>
+          </div>
+          <div className="projects__filters" role="group" aria-label="Filtrer les projets">
+            {projectFilters.map((f) => (
+              <button
+                key={f.id}
+                aria-pressed={filter === f.id}
+                className={filter === f.id ? 'is-active' : ''}
+                onClick={() => setFilter(f.id)}
+              >
+                {f.label}
+              </button>
+            ))}
+          </div>
+        </Reveal>
 
-        <div className="filters" role="tablist" aria-label="Filtrer les projets">
-          {projectFilters.map((f) => (
-            <button
-              key={f.id}
-              role="tab"
-              aria-selected={filter === f.id}
-              className={`filters__btn ${filter === f.id ? 'filters__btn--active' : ''}`}
-              onClick={() => setFilter(f.id)}
-            >
-              {f.label}
-            </button>
+        <div className="projects__list">
+          {visible.map((project) => (
+            <Project key={project.name} project={project} index={projects.indexOf(project)} />
           ))}
         </div>
-
-        {showFeatured && <Featured project={featured} />}
-
-        <motion.div layout className="projects__grid">
-          <AnimatePresence mode="popLayout">
-            {visible.map((project) => (
-              <motion.article
-                layout
-                key={project.name}
-                className="project-card"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.96 }}
-                transition={{ duration: 0.4 }}
-              >
-                <div className={`project-card__cover project-card__cover--${project.images[0].kind}`}>
-                  <Shots images={project.images} />
-                </div>
-
-                <div className="project-card__body">
-                  <span className="project-card__tag">{project.tag}</span>
-                  <h3 className="project-card__title">{project.name}</h3>
-                  <p className="project-card__desc">{project.description}</p>
-                  <ul className="highlights highlights--compact">
-                    {project.highlights.map((h) => (
-                      <li key={h}><FaCheck /> {h}</li>
-                    ))}
-                  </ul>
-                  <Tech items={project.tech} />
-                  <Links project={project} />
-                </div>
-              </motion.article>
-            ))}
-          </AnimatePresence>
-        </motion.div>
       </div>
     </section>
   );

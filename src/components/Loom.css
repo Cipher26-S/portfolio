@@ -1,0 +1,165 @@
+.loom {
+  background: var(--encre);
+  color: var(--coton);
+}
+
+.loom .title em {
+  color: var(--ocre);
+}
+
+.loom__inner {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(36px, 6vw, 80px);
+  align-items: center;
+}
+
+.loom__lead {
+  color: rgba(251, 246, 236, 0.8);
+  font-size: clamp(1.05rem, 1rem + 0.3vw, 1.2rem);
+  margin: 22px 0 30px;
+  max-width: 52ch;
+}
+
+.loom__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-weight: 700;
+  margin-bottom: 22px;
+}
+
+.loom__field input {
+  font: inherit;
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-weight: 800;
+  padding: 10px 4px;
+  color: var(--coton);
+  background: transparent;
+  border: none;
+  border-bottom: 3px dashed var(--ocre);
+  width: 100%;
+  max-width: 460px;
+}
+
+.loom__field input:focus {
+  outline: none;
+  border-bottom-style: solid;
+}
+
+.loom__field input::placeholder {
+  color: rgba(251, 246, 236, 0.35);
+}
+
+.loom__palettes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  border: none;
+  margin-bottom: 30px;
+}
+
+.loom__palettes legend {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.loom__palettes button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px 8px 8px;
+  border-radius: 999px;
+  border: 2px solid rgba(251, 246, 236, 0.35);
+  font-weight: 600;
+}
+
+.loom__palettes button.is-active {
+  border-color: var(--ocre);
+  background: rgba(217, 146, 43, 0.15);
+}
+
+.loom__swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--coton);
+}
+
+.loom__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.loom .btn {
+  border-color: var(--coton);
+}
+
+.loom .btn:hover {
+  box-shadow: 4px 4px 0 var(--ocre);
+}
+
+/* Le pagne, suspendu comme sur un fil à linge */
+.loom__frame {
+  position: relative;
+  justify-self: center;
+  width: min(100%, 420px);
+}
+
+.loom__frame::before {
+  content: '';
+  position: absolute;
+  left: -24px;
+  right: -24px;
+  top: -14px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--sable);
+}
+
+.loom__frame canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px 4px 14px 14px;
+  border: 3px solid var(--coton);
+  box-shadow: 14px 14px 0 var(--terre);
+  animation: sway 6s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+@keyframes sway {
+  0%, 100% {
+    transform: rotate(-1deg);
+  }
+  50% {
+    transform: rotate(1deg);
+  }
+}
+
+.loom__caption {
+  margin-top: 26px;
+  text-align: center;
+  color: rgba(251, 246, 236, 0.8);
+}
+
+.loom__caption strong {
+  color: var(--ocre);
+}
+
+@media (max-width: 900px) {
+  .loom__inner {
+    grid-template-columns: 1fr;
+  }
+  .loom__frame {
+    width: min(100%, 340px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loom__frame canvas {
+    animation: none;
+  }
+}

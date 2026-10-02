@@ -1,35 +1,27 @@
+/* =========================================================
+   Faso Dan Fani — système visuel
+   Coton crème, encre, indigo, ocre, terre rouge, vert karité
+   ========================================================= */
 :root {
-  --bg: #0b0714;
-  --bg-alt: #130b24;
-  --surface: rgba(255, 255, 255, 0.045);
-  --surface-hover: rgba(255, 255, 255, 0.08);
-  --border: rgba(255, 255, 255, 0.1);
+  --creme: #f4ead8;
+  --coton: #fbf6ec;
+  --sable: #e7d6b8;
+  --encre: #1c1712;
+  --encre-douce: #4d443a;
+  --indigo: #1d2a5e;
+  --nuit: #121a40;
+  --ocre: #d9922b;
+  --terre: #b8432a;
+  --vert: #2f6b4f;
 
-  --text: #f6f4fb;
-  --text-muted: #b3a9cc;
-  --text-dim: #8578a6;
+  --font-display: 'Bricolage Grotesque', 'Instrument Sans', sans-serif;
+  --font-body: 'Instrument Sans', system-ui, sans-serif;
 
-  --purple: #8b5cf6;
-  --purple-light: #a78bfa;
-  --pink: #ec4899;
-  --orange: #fb923c;
-  --cyan: #22d3ee;
-  --yellow: #facc15;
+  --container: 1200px;
+  --gutter: clamp(16px, 4vw, 40px);
+  --radius: 18px;
 
-  --gradient-1: linear-gradient(135deg, #8b5cf6 0%, #ec4899 50%, #fb923c 100%);
-  --gradient-2: linear-gradient(120deg, #22d3ee 0%, #8b5cf6 100%);
-  --gradient-3: linear-gradient(120deg, #ec4899 0%, #fb923c 100%);
-
-  --font-heading: 'Space Grotesk', 'Inter', sans-serif;
-  --font-body: 'Inter', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-
-  --container: 1160px;
-  --radius-sm: 10px;
-  --radius-md: 18px;
-  --radius-lg: 28px;
-
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 * {
@@ -40,24 +32,35 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px;
 }
 
 body {
-  background:
-    radial-gradient(900px 600px at 85% -10%, rgba(139, 92, 246, 0.18), transparent 60%),
-    radial-gradient(700px 500px at -10% 30%, rgba(236, 72, 153, 0.08), transparent 60%),
-    var(--bg);
-  background-attachment: fixed;
-  color: var(--text);
+  background: var(--creme);
+  color: var(--encre);
   font-family: var(--font-body);
-  line-height: 1.6;
-  overflow-x: hidden;
+  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Grain de coton, très léger */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+  background:
+    repeating-linear-gradient(90deg, rgba(28, 23, 18, 0.025) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(0deg, rgba(28, 23, 18, 0.02) 0 1px, transparent 1px 5px);
 }
 
 #root {
   position: relative;
-  overflow-x: hidden;
+  z-index: 1;
 }
 
 img {
@@ -67,11 +70,10 @@ img {
 
 a {
   color: inherit;
-  text-decoration: none;
 }
 
 button {
-  font-family: inherit;
+  font: inherit;
   cursor: pointer;
   border: none;
   background: none;
@@ -83,156 +85,145 @@ ul {
 }
 
 h1, h2, h3, h4 {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.025em;
 }
 
 ::selection {
-  background: var(--pink);
-  color: #fff;
+  background: var(--ocre);
+  color: var(--encre);
 }
 
-::-webkit-scrollbar {
-  width: 10px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg);
-}
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(var(--purple), var(--pink));
-  border-radius: 10px;
+:focus-visible {
+  outline: 3px solid var(--terre);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
-/* ---------- shared utility classes ---------- */
-
+/* ---------- Utilitaires ---------- */
 .container {
   width: 100%;
   max-width: var(--container);
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 var(--gutter);
 }
 
 .section {
   position: relative;
-  padding: 120px 0;
+  padding: clamp(80px, 12vw, 140px) 0;
 }
 
-.section:nth-of-type(even) {
-  background: rgba(255, 255, 255, 0.015);
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-}
-
-@media (max-width: 768px) {
-  .section {
-    padding: 90px 0;
-  }
-}
-
-.eyebrow {
+.kicker {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  letter-spacing: 0.12em;
+  gap: 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--pink);
-  margin-bottom: 16px;
+  color: var(--terre);
+  margin-bottom: 18px;
 }
 
-.eyebrow::before {
+/* Petit nœud de fil devant chaque titre de section */
+.kicker::before {
   content: '';
-  width: 26px;
-  height: 2px;
-  background: var(--gradient-1);
-  border-radius: 2px;
+  width: 34px;
+  height: 8px;
+  border-radius: 4px;
+  background: repeating-linear-gradient(90deg, var(--indigo) 0 8px, var(--ocre) 8px 12px, var(--terre) 12px 20px);
 }
 
-.section-title {
-  font-size: clamp(2rem, 4vw, 2.9rem);
-  margin-bottom: 16px;
+.title {
+  font-size: clamp(2.4rem, 6vw, 4.6rem);
+  max-width: 14ch;
 }
 
-.section-title .accent {
-  background: var(--gradient-1);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+.title em {
+  font-style: normal;
+  color: var(--terre);
 }
 
-.section-lead {
-  color: var(--text-muted);
-  max-width: 600px;
-  font-size: 1.05rem;
+.lead {
+  font-size: clamp(1.05rem, 1rem + 0.4vw, 1.3rem);
+  color: var(--encre-douce);
+  max-width: 62ch;
 }
 
-.gradient-text {
-  background: var(--gradient-1);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
+/* Boutons : aplats francs, coins doux, ombre « tampon » */
 .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
-  padding: 15px 30px;
-  border-radius: 100px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  white-space: nowrap;
+  padding: 16px 28px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  border: 2px solid var(--encre);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--encre);
 }
 
 .btn:active {
-  transform: scale(0.97);
+  transform: translate(0, 0);
+  box-shadow: none;
 }
 
-.btn-primary {
-  background: var(--gradient-1);
-  background-size: 200% auto;
-  color: #fff;
-  box-shadow: 0 10px 30px -8px rgba(236, 72, 153, 0.55);
+.btn--dark {
+  background: var(--indigo);
+  color: var(--coton);
 }
 
-.btn-primary:hover {
-  background-position: right center;
-  box-shadow: 0 14px 36px -6px rgba(236, 72, 153, 0.7);
-  transform: translateY(-3px);
+.btn--light {
+  background: var(--coton);
+  color: var(--encre);
 }
 
-.btn-ghost {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  color: var(--text);
-  backdrop-filter: blur(6px);
+.btn--ocre {
+  background: var(--ocre);
+  color: var(--encre);
 }
 
-.btn-ghost:hover {
-  background: var(--surface-hover);
-  border-color: rgba(255, 255, 255, 0.22);
-  transform: translateY(-3px);
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
-.pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 7px 16px;
-  border-radius: 100px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  font-size: 0.85rem;
-  color: var(--text-muted);
+/* Apparition douce au défilement */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .btn,
+  .btn:hover {
+    transition: none;
   }
 }

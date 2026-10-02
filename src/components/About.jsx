@@ -1,49 +1,53 @@
-import { motion } from 'framer-motion';
-import { profile } from '../data/content';
+import { profile, services } from '../data/content';
+import Reveal from './Reveal';
+import Weave from './Weave';
 import './About.css';
 
 export default function About() {
   return (
-    <section id="about" className="section about">
-      <div className="container about__inner">
-        <motion.div
-          className="about__content"
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.7 }}
-        >
-          <span className="eyebrow">À propos de moi</span>
-          <h2 className="section-title">
-            Construire des logiciels qui <span className="accent">comptent réellement</span>
-          </h2>
-          <p className="about__bio">{profile.bio}</p>
+    <section id="about" className="about">
+      <div className="container about__inner section">
+        <Reveal className="about__intro">
+          <span className="kicker kicker--light">Le fil de l'histoire</span>
+          <h2 className="title">Un tisserand <em>de logiciels</em>, né à Koudougou.</h2>
+        </Reveal>
 
-          <div className="about__stats">
-            {profile.stats.map((stat) => (
-              <div key={stat.label} className="about__stat">
-                <span className="about__stat-value gradient-text">{stat.value}</span>
-                <span className="about__stat-label">{stat.label}</span>
+        <div className="about__grid">
+          <Reveal className="about__bio" delay={100}>
+            <p>{profile.bio}</p>
+
+            <ul className="about__stats">
+              {profile.stats.map((stat) => (
+                <li key={stat.label}>
+                  <strong>{stat.value}</strong>
+                  <span>{stat.label}</span>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+
+          <Reveal as="dl" className="about__tag" delay={200}>
+            <div className="about__tag-hole" aria-hidden="true" />
+            {profile.facts.map((fact) => (
+              <div key={fact.label}>
+                <dt>{fact.label}</dt>
+                <dd>{fact.value}</dd>
               </div>
             ))}
-          </div>
-        </motion.div>
+          </Reveal>
+        </div>
 
-        <motion.dl
-          className="about__facts"
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.7 }}
-        >
-          {profile.facts.map((fact) => (
-            <div key={fact.label} className="about__fact">
-              <dt>{fact.label}</dt>
-              <dd>{fact.value}</dd>
-            </div>
+        <ul className="about__services">
+          {services.map((service, i) => (
+            <Reveal as="li" key={service.title} delay={i * 90}>
+              <span className="about__service-num">0{i + 1}</span>
+              <h3>{service.title}</h3>
+              <p>{service.description}</p>
+            </Reveal>
           ))}
-        </motion.dl>
+        </ul>
       </div>
+      <Weave seed="about-indigo" height={18} />
     </section>
   );
 }

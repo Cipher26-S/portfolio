@@ -1,0 +1,274 @@
+<!doctype html>
+<!--
+  CV de Sawadogo Kiswendsida Salif — source modifiable.
+  Pour régénérer le PDF : ouvrir ce fichier dans Chrome > Imprimer > Enregistrer au format PDF
+  (format A4, marges « Aucune », cocher « Graphiques d'arrière-plan »), puis remplacer public/cv.pdf.
+-->
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>CV — Sawadogo Kiswendsida Salif</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --indigo: #1d2a5e;
+      --indigo-deep: #141d45;
+      --ocre: #d9922b;
+      --terre: #b8432a;
+      --vert: #2f6b4f;
+      --creme: #f6eedf;
+      --encre: #1c1712;
+      --gris: #5d564c;
+    }
+
+    @page { size: A4; margin: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body { width: 210mm; height: 297mm; }
+    body {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 9.3pt;
+      line-height: 1.42;
+      color: var(--encre);
+      background: #fff;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Bande tissée (Faso Dan Fani) */
+    .weave {
+      height: 7mm;
+      background:
+        repeating-linear-gradient(90deg,
+          var(--indigo) 0 9mm, var(--ocre) 9mm 11mm, var(--creme) 11mm 12mm,
+          var(--terre) 12mm 18mm, var(--creme) 18mm 19mm, var(--vert) 19mm 22mm,
+          var(--ocre) 22mm 24mm, var(--indigo-deep) 24mm 30mm);
+    }
+    .weave::after {
+      content: '';
+      display: block;
+      height: 100%;
+      background: repeating-linear-gradient(0deg, rgba(255,255,255,.18) 0 0.6mm, transparent 0.6mm 1.6mm);
+    }
+
+    .page { display: grid; grid-template-columns: 66mm 1fr; height: calc(297mm - 7mm); }
+
+    /* ---------- Colonne latérale ---------- */
+    aside {
+      background: var(--indigo);
+      color: #eef0f8;
+      padding: 9mm 7mm;
+      display: flex;
+      flex-direction: column;
+      gap: 6mm;
+    }
+    .photo {
+      width: 36mm; height: 36mm;
+      border-radius: 50%;
+      object-fit: cover;
+      align-self: center;
+      border: 1.2mm solid var(--ocre);
+    }
+    aside h3 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 8.5pt;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--ocre);
+      margin-bottom: 2mm;
+    }
+    aside dl, aside ul { list-style: none; display: flex; flex-direction: column; gap: 1.6mm; }
+    aside dt { font-size: 7.4pt; color: #aab3d6; text-transform: uppercase; letter-spacing: .06em; }
+    aside dd { font-weight: 500; word-break: break-word; }
+    aside a { color: inherit; text-decoration: none; }
+    .skill b { display: block; font-size: 7.6pt; color: #aab3d6; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; }
+    .lang { display: flex; justify-content: space-between; }
+    .lang span { color: #aab3d6; }
+
+    /* ---------- Colonne principale ---------- */
+    main { padding: 9mm 10mm 8mm; display: flex; flex-direction: column; gap: 5mm; }
+    header h1 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 25pt;
+      line-height: 1;
+      color: var(--indigo-deep);
+      letter-spacing: -0.02em;
+    }
+    header .role {
+      margin-top: 2.2mm;
+      font-size: 11pt;
+      font-weight: 600;
+      color: var(--terre);
+    }
+    section h2 {
+      display: flex;
+      align-items: center;
+      gap: 3mm;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 10.5pt;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--indigo);
+      margin-bottom: 2.4mm;
+    }
+    section h2::after {
+      content: '';
+      flex: 1;
+      height: 1.4mm;
+      background: repeating-linear-gradient(90deg, var(--ocre) 0 4mm, var(--terre) 4mm 6mm, var(--indigo) 6mm 9mm);
+      opacity: .85;
+    }
+    .item + .item { margin-top: 3mm; }
+    .item-head { display: flex; justify-content: space-between; gap: 4mm; align-items: baseline; }
+    .item-head strong { font-size: 10pt; }
+    .item-head .date { color: var(--gris); font-size: 8.4pt; white-space: nowrap; }
+    .where { color: var(--terre); font-weight: 600; font-size: 8.8pt; }
+    .stack { color: var(--gris); font-size: 8.3pt; font-style: italic; }
+    ul.points { margin: 1.2mm 0 0 4.2mm; }
+    ul.points li { margin-bottom: .6mm; }
+    ul.points li::marker { color: var(--ocre); }
+    .badge {
+      display: inline-block;
+      margin-left: 2mm;
+      padding: .3mm 2mm;
+      border-radius: 2mm;
+      background: var(--vert);
+      color: #fff;
+      font-size: 7.4pt;
+      font-weight: 600;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+  <div class="weave"></div>
+  <div class="page">
+    <aside>
+      <img class="photo" src="../public/profile.webp" alt="Photo de Sawadogo Kiswendsida Salif">
+
+      <div>
+        <h3>Contact</h3>
+        <dl>
+          <div><dt>Email</dt><dd><a href="mailto:salifswd6@gmail.com">salifswd6@gmail.com</a></dd></div>
+          <div><dt>Téléphone</dt><dd>+226 07 03 62 83</dd></div>
+          <div><dt>Localisation</dt><dd>Koudougou, Burkina Faso</dd></div>
+          <div><dt>Portfolio</dt><dd><a href="https://cipher26-s.github.io/portfolio/">cipher26-s.github.io/portfolio</a></dd></div>
+          <div><dt>GitHub</dt><dd><a href="https://github.com/Cipher26-S">github.com/Cipher26-S</a></dd></div>
+          <div><dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/salif-sawadogo-348081375">in/salif-sawadogo-348081375</a></dd></div>
+        </dl>
+      </div>
+
+      <div>
+        <h3>Compétences</h3>
+        <ul>
+          <li class="skill"><b>Langages</b>JavaScript · Dart · Python · HTML &amp; CSS · SQL</li>
+          <li class="skill"><b>Frameworks</b>React · Next.js · Node.js / Express · FastAPI · Django · Laravel · Flutter</li>
+          <li class="skill"><b>Données</b>PostgreSQL · MySQL · MongoDB · SQLite · Prisma</li>
+          <li class="skill"><b>Outils</b>Git / GitHub · Docker · Swagger · Tests automatisés · VS Code</li>
+          <li class="skill"><b>Logiciels métiers</b>Odoo · WinDev · WebDev · Android Studio</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Langues</h3>
+        <ul>
+          <li class="lang">Français <span>Maternelle</span></li>
+          <li class="lang">Mooré <span>Maternelle</span></li>
+          <li class="lang">Anglais <span>Intermédiaire</span></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Centres d'intérêt</h3>
+        <p>Intelligence artificielle · Design &amp; branding · Entrepreneuriat numérique · Sport</p>
+      </div>
+    </aside>
+
+    <main>
+      <header>
+        <h1>Sawadogo<br>Kiswendsida Salif</h1>
+        <p class="role">Développeur Full-Stack &amp; Mobile — Licence en Informatique</p>
+      </header>
+
+      <section>
+        <h2>Profil</h2>
+        <p>
+          Diplômé d'une Licence en Informatique (Programmation et Entrepreneuriat) du Burkina Institute of Technology.
+          Je conçois des applications complètes, de l'API REST (Node.js, FastAPI) aux interfaces web et mobiles
+          (React, Flutter), avec un soin particulier pour la sécurité, la documentation et les tests.
+          Deux stages en entreprise m'ont fait découvrir les solutions de gestion Odoo et le développement en équipe.
+        </p>
+      </section>
+
+      <section>
+        <h2>Formation</h2>
+        <div class="item">
+          <div class="item-head">
+            <strong>Licence en Informatique — Programmation et Entrepreneuriat <span class="badge">Obtenue</span></strong>
+            <span class="date">10/2023 — 07/2026</span>
+          </div>
+          <div class="where">Burkina Institute of Technology (BIT), Koudougou</div>
+          <p>Diplôme obtenu en 2026. Projet de fin d'études : FasoConnect.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>Expérience professionnelle</h2>
+        <div class="item">
+          <div class="item-head">
+            <strong>Stagiaire en informatique et développement</strong>
+            <span class="date">08/2024 — 10/2024 · 07/2025 — 10/2025</span>
+          </div>
+          <div class="where">Telia Informatique, Burkina Faso</div>
+          <ul class="points">
+            <li>Participation à des projets de développement de solutions numériques de gestion</li>
+            <li>Configuration et utilisation du progiciel de gestion Odoo</li>
+            <li>Assistance technique, maintenance informatique et dépannage utilisateurs</li>
+            <li>Découverte du workflow professionnel du développement logiciel en entreprise</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Projets</h2>
+        <div class="item">
+          <div class="item-head">
+            <strong>FasoConnect — mise en relation clients / artisans</strong>
+            <span class="date">2025 — 2026</span>
+          </div>
+          <div class="stack">Flutter · React · Node.js · Express 5 · PostgreSQL · Prisma · JWT</div>
+          <ul class="points">
+            <li>API REST complète documentée (Swagger / OpenAPI) avec 19 tests automatisés</li>
+            <li>Authentification JWT et rôles client, artisan et administrateur</li>
+            <li>Application mobile Flutter et tableau de bord d'administration React</li>
+          </ul>
+        </div>
+        <div class="item">
+          <div class="item-head">
+            <strong>CV AI Assistant — CV et lettres de motivation par IA</strong>
+            <span class="date">2026</span>
+          </div>
+          <div class="stack">Python · FastAPI · Pydantic · LLM (Groq)</div>
+          <ul class="points">
+            <li>Génération de CV et de lettres avec aperçu A4 et export PDF ; l'IA ne réécrit que le texte</li>
+            <li>Données personnelles jamais transmises au fournisseur d'IA ; 10 tests pytest</li>
+          </ul>
+        </div>
+        <div class="item">
+          <div class="item-head">
+            <strong>TontiFaso Mobile · Delivery Driver Tracker · Restaurant Reservation</strong>
+            <span class="date">2025 — 2026</span>
+          </div>
+          <div class="stack">Flutter · Node.js · MongoDB · React · PostgreSQL</div>
+          <ul class="points">
+            <li>Épargne et prêts de tontine en FCFA, suivi GPS de livreurs, réservation de tables en ligne</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
