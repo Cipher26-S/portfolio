@@ -1,0 +1,122 @@
+.about__inner {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 70px;
+  align-items: center;
+}
+
+.about__visual {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.about__avatar-ring {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  border-radius: 40px;
+  padding: 6px;
+  background: var(--gradient-1);
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.about__avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 36px;
+  background: var(--bg-alt);
+  display: grid;
+  place-items: center;
+}
+
+.about__avatar span {
+  font-family: var(--font-heading);
+  font-size: 5rem;
+  font-weight: 700;
+  background: var(--gradient-1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.about__blob-deco {
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: var(--cyan);
+  filter: blur(60px);
+  opacity: 0.5;
+  bottom: -20px;
+  right: 20px;
+  z-index: -1;
+}
+
+.about__bio {
+  color: var(--text-muted);
+  font-size: 1.02rem;
+  margin-bottom: 20px;
+}
+
+.about__location {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-dim);
+  font-size: 0.92rem;
+  margin-bottom: 36px;
+}
+
+.about__location svg {
+  color: var(--pink);
+}
+
+.about__stats {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.about__stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.about__stat-value {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.about__stat-label {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 860px) {
+  .about__inner {
+    grid-template-columns: 1fr;
+    gap: 50px;
+    text-align: center;
+  }
+  .about__location {
+    justify-content: center;
+  }
+  .about__stats {
+    justify-content: center;
+  }
+  .about__avatar-ring {
+    width: 220px;
+    height: 220px;
+  }
+  .about__avatar span {
+    font-size: 3.6rem;
+  }
+}
