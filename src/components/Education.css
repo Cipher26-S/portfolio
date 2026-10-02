@@ -1,7 +1,33 @@
+.journey {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  margin-top: 16px;
+}
+
+.journey__heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1rem;
+  margin-bottom: 28px;
+  color: var(--text-muted);
+}
+
+.journey__heading svg {
+  color: var(--pink);
+}
+
+@media (max-width: 860px) {
+  .journey {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+}
+
 .timeline {
   position: relative;
-  max-width: 720px;
-  margin: 0 auto;
+  margin-left: 20px;
   padding-left: 26px;
   border-left: 2px solid var(--border);
 }

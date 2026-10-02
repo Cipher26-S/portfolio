@@ -1,4 +1,3 @@
-import WalkingScene from './components/WalkingScene';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -12,14 +11,13 @@ import Footer from './components/Footer';
 function App() {
   return (
     <>
-      <WalkingScene />
       <Navbar />
       <main>
         <Hero />
         <About />
+        <Projects />
         <Skills />
         <Services />
-        <Projects />
         <Education />
         <Contact />
       </main>

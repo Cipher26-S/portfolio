@@ -1,16 +1,28 @@
-# React + Vite
+# Portfolio — Salif Sawadogo
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Portfolio personnel de **Sawadogo Kiswendsida Salif**, développeur Full-Stack & Mobile basé à Koudougou (Burkina Faso).
 
-Currently, two official plugins are available:
+## Contenu
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Présentation, compétences et services
+- Projets avec captures réelles, points forts et liens vers le code : FasoConnect, CV AI Assistant, TontiFaso Mobile, Restaurant Reservation System, Delivery Driver Tracker
+- Parcours (expérience et formation), contact et CV téléchargeable
 
-## React Compiler
+Tout le contenu se modifie dans [`src/data/content.js`](src/data/content.js) ; les images sont dans `public/`.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Stack
 
-## Expanding the Oxlint configuration
+React 19, Vite, Framer Motion, React Icons.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## Lancer en local
+
+```bash
+npm install
+npm run dev
+```
+
+## Production
+
+```bash
+npm run build     # génère dist/, à déployer sur Netlify, Vercel ou GitHub Pages
+```

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { FaCode, FaMobileAlt, FaServer, FaDatabase } from 'react-icons/fa';
+import { FaCode, FaMobileAlt, FaServer, FaDatabase, FaRobot } from 'react-icons/fa';
 import { services } from '../data/content';
 import './Services.css';
 
@@ -8,6 +8,7 @@ const ICONS = {
   mobile: FaMobileAlt,
   server: FaServer,
   database: FaDatabase,
+  ai: FaRobot,
 };
 
 export default function Services() {
