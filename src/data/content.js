@@ -1,8 +1,11 @@
+// Fichiers de public/, préfixés par la base du site (/ en local, /portfolio/ sur GitHub Pages)
+const asset = (path) => `${import.meta.env.BASE_URL}${path}`;
+
 export const profile = {
   name: 'Sawadogo Kiswendsida Salif',
   shortName: 'Salif Sawadogo',
   initials: 'SKS',
-  photo: '/profile.webp',
+  photo: asset('profile.webp'),
   title: 'Développeur Full-Stack & Mobile',
   subtitle: 'React · Node.js · Flutter · Python',
   location: 'Koudougou, Burkina Faso',
@@ -11,7 +14,7 @@ export const profile = {
   phoneHref: 'tel:+22607036283',
   github: 'https://github.com/Cipher26-S',
   linkedin: 'https://www.linkedin.com/in/salif-sawadogo-348081375',
-  cvPath: '/cv.pdf',
+  cvPath: asset('cv.pdf'),
   availability: 'Disponible pour un stage ou un premier emploi',
   lead:
     "Je conçois des applications web et mobiles complètes, de l'API à l'interface, avec une attention particulière à la qualité du code, aux tests et aux besoins réels des utilisateurs au Burkina Faso.",
@@ -79,7 +82,7 @@ export const projects = [
     tag: "Projet de fin d'études",
     categories: ['web', 'mobile'],
     featured: true,
-    logo: '/projects/fasoconnect-logo.webp',
+    logo: asset('projects/fasoconnect-logo.webp'),
     description:
       'Plateforme qui met en relation des clients avec des artisans qualifiés (électriciens, plombiers, mécaniciens…) au Burkina Faso : recherche, demandes de service, suivi des interventions et avis.',
     highlights: [
@@ -90,8 +93,8 @@ export const projects = [
     ],
     tech: ['Flutter', 'React', 'Node.js', 'Express', 'PostgreSQL', 'Prisma', 'JWT'],
     images: [
-      { src: '/projects/fasoconnect-home.webp', alt: "FasoConnect — écran d'accueil mobile", kind: 'phone' },
-      { src: '/projects/fasoconnect-request.webp', alt: 'FasoConnect — nouvelle demande de service', kind: 'phone' },
+      { src: asset('projects/fasoconnect-home.webp'), alt: "FasoConnect — écran d'accueil mobile", kind: 'phone' },
+      { src: asset('projects/fasoconnect-request.webp'), alt: 'FasoConnect — nouvelle demande de service', kind: 'phone' },
     ],
     github: 'https://github.com/Cipher26-S/fasoconnect',
     demo: '',
@@ -108,7 +111,7 @@ export const projects = [
       '10 tests pytest avec une IA simulée injectée',
     ],
     tech: ['Python', 'FastAPI', 'Pydantic', 'LLM', 'JavaScript'],
-    images: [{ src: '/projects/cv-ai-assistant.webp', alt: 'CV AI Assistant — CV généré et aperçu A4', kind: 'desktop' }],
+    images: [{ src: asset('projects/cv-ai-assistant.webp'), alt: 'CV AI Assistant — CV généré et aperçu A4', kind: 'desktop' }],
     github: 'https://github.com/Cipher26-S/cv-ai-assistant',
     demo: '',
   },
@@ -125,8 +128,8 @@ export const projects = [
     ],
     tech: ['Flutter', 'Dart', 'Provider', 'REST API'],
     images: [
-      { src: '/projects/tontifaso-dashboard.webp', alt: 'TontiFaso — tableau de bord du membre', kind: 'phone' },
-      { src: '/projects/tontifaso-login.webp', alt: 'TontiFaso — connexion avec mode démo', kind: 'phone' },
+      { src: asset('projects/tontifaso-dashboard.webp'), alt: 'TontiFaso — tableau de bord du membre', kind: 'phone' },
+      { src: asset('projects/tontifaso-login.webp'), alt: 'TontiFaso — connexion avec mode démo', kind: 'phone' },
     ],
     github: 'https://github.com/Cipher26-S/tontifaso-mobile',
     demo: '',
@@ -144,7 +147,7 @@ export const projects = [
     ],
     tech: ['React', 'Node.js', 'Express', 'PostgreSQL', 'Sequelize', 'Bootstrap'],
     images: [
-      { src: '/projects/restaurant-reservations.webp', alt: 'Restaurant Reservation — réservations côté restaurateur', kind: 'desktop' },
+      { src: asset('projects/restaurant-reservations.webp'), alt: 'Restaurant Reservation — réservations côté restaurateur', kind: 'desktop' },
     ],
     github: 'https://github.com/Cipher26-S/restaurant-reservation-system',
     demo: '',
@@ -162,8 +165,8 @@ export const projects = [
     ],
     tech: ['Flutter', 'Node.js', 'Express', 'MongoDB'],
     images: [
-      { src: '/projects/delivery-list.webp', alt: 'Delivery Driver Tracker — liste des livraisons', kind: 'phone' },
-      { src: '/projects/delivery-login.webp', alt: 'Delivery Driver Tracker — connexion', kind: 'phone' },
+      { src: asset('projects/delivery-list.webp'), alt: 'Delivery Driver Tracker — liste des livraisons', kind: 'phone' },
+      { src: asset('projects/delivery-login.webp'), alt: 'Delivery Driver Tracker — connexion', kind: 'phone' },
     ],
     github: 'https://github.com/Cipher26-S/delivery-driver-tracker',
     demo: '',

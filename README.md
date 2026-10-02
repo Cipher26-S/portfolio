@@ -1,5 +1,7 @@
 # Portfolio — Salif Sawadogo
 
+**En ligne : https://cipher26-s.github.io/portfolio/**
+
 Portfolio personnel de **Sawadogo Kiswendsida Salif**, développeur Full-Stack & Mobile basé à Koudougou (Burkina Faso).
 
 ## Contenu
@@ -21,8 +23,8 @@ npm install
 npm run dev
 ```
 
-## Production
+## Déploiement
 
-```bash
-npm run build     # génère dist/, à déployer sur Netlify, Vercel ou GitHub Pages
-```
+Chaque push sur `main` recompile le site et le publie sur GitHub Pages (workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), branche `gh-pages`).
+
+Pour un hébergement à la racine d'un domaine (Netlify, Vercel) : `BASE_PATH=/ npm run build`.
