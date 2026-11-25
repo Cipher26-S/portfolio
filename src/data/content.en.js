@@ -135,7 +135,7 @@ export const projects = [
 
 export const atelier = {
   label: 'The workshop: projects in 3D',
-  kicker: 'The workshop',
+  kicker: 'Work',
   titleStart: 'Step into',
   titleEm: 'the workshop.',
   hint: 'Scroll, or use the ← → keys: each project comes off the wall.',
@@ -153,6 +153,14 @@ export const atelier = {
   start: 'Enter',
   end: 'End',
   skip: 'Skip the workshop',
+  sheet: {
+    close: 'Close',
+    prev: 'Previous',
+    next: 'Next',
+    code: 'Source code',
+    demo: 'Live demo',
+    tech: 'Technologies',
+  },
 };
 
 export const projectFilters = [

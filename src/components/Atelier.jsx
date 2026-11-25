@@ -1,27 +1,20 @@
-import { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { FaGithub, FaArrowDown, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useContent } from '../lib/lang';
 import { timeline, STOPS, SNAP_ZONE, nearestStop } from './atelierTimeline';
 import { projectSlug } from '../lib/slug';
+import { CAN_3D } from '../lib/can3d';
+import ProjectSheet from './ProjectSheet';
 import './Atelier.css';
 
 // three.js ne se télécharge que lorsque le visiteur approche de l'atelier
 const AtelierScene = lazy(() => import('./AtelierScene'));
 
-function canRun3D() {
-  if (typeof window === 'undefined') return false;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
-  try {
-    const canvas = document.createElement('canvas');
-    return Boolean(canvas.getContext('webgl2') || canvas.getContext('webgl'));
-  } catch {
-    return false;
-  }
-}
-
 export default function Atelier() {
   const { projects, atelier } = useContent();
-  const [enabled] = useState(canRun3D);
+  const enabled = CAN_3D;
+  const [sheet, setSheet] = useState(-1);
+  const sheetOpen = sheet >= 0;
   const sectionRef = useRef(null);
   const progressRef = useRef(0);
   const [near, setNear] = useState(false);
@@ -109,6 +102,7 @@ export default function Atelier() {
     if (!enabled) return undefined;
     const onKey = (e) => {
       if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      if (sheetOpen) return;
       if (e.target.closest?.('input, textarea, select, [contenteditable]')) return;
       const rect = sectionRef.current?.getBoundingClientRect();
       if (!rect || rect.top > 1 || rect.bottom < window.innerHeight - 1) return;
@@ -119,7 +113,37 @@ export default function Atelier() {
     return () => window.removeEventListener('keydown', onKey);
   });
 
+  // Liens vers un projet (#fasoconnect, depuis la section Services par exemple) : la caméra s'y rend
+  useEffect(() => {
+    if (!enabled) return undefined;
+    const onHash = () => {
+      const k = projects.findIndex((p) => `#${projectSlug(p.name)}` === window.location.hash);
+      if (k < 0) return;
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+      scrollToProgress(STOPS[k]);
+    };
+    onHash();
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [enabled, projects]);
+
+  const closeSheet = useCallback(() => {
+    setSheet((k) => {
+      // On referme sur le projet consulté, pour que la caméra montre le même
+      if (k >= 0) window.setTimeout(() => scrollToProgress(STOPS[k]), 0);
+      return -1;
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const moveSheet = useCallback(
+    (dir) => setSheet((k) => Math.min(projects.length - 1, Math.max(0, k + dir))),
+    [projects.length]
+  );
+
   if (!enabled) return null;
+
+  const nextSection = () => sectionRef.current?.nextElementSibling;
 
   // Avance ou recule d'un arrêt ; depuis l'entrée, « suivant » mène au premier projet
   function step(dir) {
@@ -130,19 +154,19 @@ export default function Atelier() {
     else next = here + dir;
     if (next < 0) return;
     if (next >= STOPS.length) {
-      document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+      nextSection()?.scrollIntoView({ behavior: 'smooth' });
       return;
     }
     scrollToProgress(STOPS[next]);
   }
 
   const goTo = (k) => scrollToProgress(STOPS[k]);
-  const skip = () => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+  const skip = () => nextSection()?.scrollIntoView({ behavior: 'smooth' });
 
   const project = view.active >= 0 ? projects[view.active] : null;
 
   return (
-    <section id="atelier" ref={sectionRef} className="atelier" aria-label={atelier.label}>
+    <section id="projects" ref={sectionRef} className="atelier" aria-label={atelier.label}>
       <div className="atelier__sticky">
         {near && (
           <Suspense fallback={<div className="atelier__loading">{atelier.loading}</div>}>
@@ -180,9 +204,9 @@ export default function Atelier() {
               ))}
             </ul>
             <div className="atelier__links">
-              <a href={`#${projectSlug(p.name)}`} className="btn btn--ocre" tabIndex={project === p ? 0 : -1}>
+              <button type="button" className="btn btn--ocre" tabIndex={project === p ? 0 : -1} onClick={() => setSheet(k)}>
                 {atelier.details}
-              </a>
+              </button>
               <a href={p.github} target="_blank" rel="noreferrer" className="btn atelier__ghost" tabIndex={project === p ? 0 : -1}>
                 <FaGithub /> {atelier.code}
               </a>
@@ -227,6 +251,17 @@ export default function Atelier() {
           ))}
         </nav>
       </div>
+
+      {sheetOpen && (
+        <ProjectSheet
+          project={projects[sheet]}
+          index={sheet}
+          total={projects.length}
+          labels={atelier.sheet}
+          onClose={closeSheet}
+          onMove={moveSheet}
+        />
+      )}
     </section>
   );
 }

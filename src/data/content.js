@@ -189,7 +189,7 @@ export const projects = [
 // Texte de l'atelier 3D (section qui précède les réalisations)
 export const atelier = {
   label: "L'atelier : les projets en 3D",
-  kicker: "L'atelier",
+  kicker: 'Réalisations',
   titleStart: 'Entrez dans',
   titleEm: "l'atelier.",
   hint: 'Faites défiler, ou utilisez les flèches ← → : chaque projet se décroche du mur.',
@@ -207,6 +207,14 @@ export const atelier = {
   start: 'Entrer',
   end: 'Fin',
   skip: "Passer l'atelier",
+  sheet: {
+    close: 'Fermer la fiche',
+    prev: 'Précédent',
+    next: 'Suivant',
+    code: 'Code source',
+    demo: 'Démo',
+    tech: 'Technologies',
+  },
 };
 
 export const projectFilters = [

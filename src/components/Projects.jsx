@@ -4,27 +4,9 @@ import { useContent } from '../lib/lang';
 import Reveal from './Reveal';
 import Weave from './Weave';
 import { projectSlug } from '../lib/slug';
+import Shots from './Shots';
+import { CAN_3D } from '../lib/can3d';
 import './Projects.css';
-
-function Shots({ images }) {
-  if (images[0].kind === 'desktop') {
-    return (
-      <div className="shot-browser">
-        <div className="shot-browser__bar"><span /><span /><span /></div>
-        <img src={images[0].src} alt={images[0].alt} loading="lazy" />
-      </div>
-    );
-  }
-  return (
-    <div className="shot-phones">
-      {images.slice(0, 2).map((img) => (
-        <div key={img.src} className="shot-phone">
-          <img src={img.src} alt={img.alt} loading="lazy" />
-        </div>
-      ))}
-    </div>
-  );
-}
 
 function Project({ project, index, t }) {
   return (
@@ -71,6 +53,8 @@ export default function Projects() {
   const { projects, projectFilters, ui } = useContent();
   const t = ui.projects;
   const [filter, setFilter] = useState('all');
+  // Avec la 3D, les projets sont présentés dans l'atelier : pas de doublon
+  if (CAN_3D) return null;
   const visible = projects.filter((p) => filter === 'all' || p.categories.includes(filter));
 
   return (
