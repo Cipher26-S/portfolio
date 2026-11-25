@@ -12,6 +12,7 @@ export const profile = {
   email: 'salifswd6@gmail.com',
   phone: '+226 07 03 62 83',
   phoneHref: 'tel:+22607036283',
+  whatsapp: 'https://wa.me/22607036283',
   github: 'https://github.com/Cipher26-S',
   linkedin: 'https://www.linkedin.com/in/salif-sawadogo-348081375',
   cvPath: asset('cv.pdf'),
@@ -185,7 +186,7 @@ export const atelier = {
   kicker: "L'atelier",
   titleStart: 'Entrez dans',
   titleEm: "l'atelier.",
-  hint: 'Faites défiler : chaque projet se décroche du mur.',
+  hint: 'Faites défiler, ou utilisez les flèches ← → : chaque projet se décroche du mur.',
   loading: "Ouverture de l'atelier…",
   details: 'Voir le détail',
   code: 'Code source',
@@ -194,6 +195,11 @@ export const atelier = {
   outroEnd: 'sur le mur.',
   cta: 'Parlons-en',
   dotsLabel: 'Aller à un projet',
+  prev: 'Projet précédent',
+  next: 'Projet suivant',
+  start: 'Entrer',
+  end: 'Fin',
+  skip: "Passer l'atelier",
 };
 
 export const projectFilters = [

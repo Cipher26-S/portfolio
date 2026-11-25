@@ -121,7 +121,8 @@
   transition: transform 0.25s ease;
 }
 
-.nav__links a:not(.btn):hover::after {
+.nav__links a:not(.btn):hover::after,
+.nav__links a[aria-current='true']::after {
   transform: scaleX(1);
 }
 

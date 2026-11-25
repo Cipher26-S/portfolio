@@ -22,6 +22,49 @@
   transition: color 0.2s ease;
 }
 
+.contact__mailrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 22px;
+  margin-top: 24px;
+}
+
+.contact__mailrow .contact__mail {
+  margin-top: 0;
+}
+
+.contact__copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: 2px solid var(--encre);
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background 0.2s ease;
+}
+
+.contact__copy:hover {
+  background: var(--sable);
+}
+
+.contact__send {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.contact__send .btn {
+  flex: 1 1 220px;
+}
+
+.btn--whatsapp {
+  background: var(--vert);
+  color: var(--coton);
+}
+
 .contact__mail:hover {
   color: var(--terre);
 }

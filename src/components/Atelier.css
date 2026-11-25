@@ -1,7 +1,7 @@
 /* L'atelier : une longue section dont l'écran reste figé pendant que la scène 3D défile */
 .atelier {
   position: relative;
-  height: 820vh;
+  height: 560vh;
   background: var(--nuit);
   color: var(--coton);
   border-top: 2px solid var(--encre);
@@ -207,6 +207,59 @@
   margin-top: 26px;
 }
 
+/* ---------- Précédent / suivant / passer ---------- */
+.atelier__controls {
+  position: absolute;
+  right: var(--gutter);
+  bottom: clamp(24px, 5vh, 44px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.atelier__controls button {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--sable);
+  color: var(--coton);
+  transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+}
+
+.atelier__controls button:hover:not(:disabled) {
+  background: var(--ocre);
+  border-color: var(--ocre);
+  color: var(--encre);
+}
+
+.atelier__controls button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.atelier__controls .atelier__skip {
+  width: auto;
+  padding: 0 18px;
+  gap: 8px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-left: 8px;
+}
+
+.atelier__count {
+  min-width: 56px;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 800;
+  color: var(--ocre);
+  letter-spacing: 0.06em;
+}
+
 /* ---------- Points de navigation ---------- */
 .atelier__dots {
   position: absolute;
@@ -237,7 +290,7 @@
 /* ---------- Mobile : le cadre en haut, le texte en bas ---------- */
 @media (max-width: 760px) {
   .atelier {
-    height: 760vh;
+    height: 520vh;
   }
 
   .atelier__vignette {
@@ -280,7 +333,25 @@
   }
 
   .atelier__dots {
+    display: none;
+  }
+
+  .atelier__controls {
     top: 84px;
-    translate: none;
+    bottom: auto;
+    left: var(--gutter);
+    right: var(--gutter);
+    justify-content: space-between;
+  }
+
+  .atelier__controls button {
+    width: 38px;
+    height: 38px;
+  }
+
+  .atelier__controls .atelier__skip {
+    margin-left: auto;
+    padding: 0 14px;
+    font-size: 0.8rem;
   }
 }

@@ -44,5 +44,19 @@ export function timeline(p) {
 
 // Position de défilement (0 → 1) où un projet est pleinement présenté
 export function progressForProject(k) {
-  return DESCENT_END + ((k + 0.3) / N) * (OUTRO_START - DESCENT_END);
+  return DESCENT_END + ((k + 0.35) / N) * (OUTRO_START - DESCENT_END);
+}
+
+// Les arrêts : chaque projet, puis le cadre vide de la fin
+export const STOPS = [...projects.map((_, k) => progressForProject(k)), OUTRO_START + 0.5 * (1 - OUTRO_START)];
+
+// En dehors de cette zone, on laisse le visiteur défiler librement (entrée et sortie de l'atelier)
+export const SNAP_ZONE = [DESCENT_END * 0.8, OUTRO_START + 0.05];
+
+export function nearestStop(p) {
+  let best = 0;
+  STOPS.forEach((s, k) => {
+    if (Math.abs(s - p) < Math.abs(STOPS[best] - p)) best = k;
+  });
+  return best;
 }

@@ -1,7 +1,7 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
-import { FaGithub, FaArrowDown } from 'react-icons/fa';
+import { FaGithub, FaArrowDown, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { projects, atelier } from '../data/content';
-import { timeline, progressForProject } from './atelierTimeline';
+import { timeline, STOPS, SNAP_ZONE, nearestStop } from './atelierTimeline';
 import { projectSlug } from '../lib/slug';
 import './Atelier.css';
 
@@ -42,33 +42,101 @@ export default function Atelier() {
     return () => io.disconnect();
   }, [enabled]);
 
+  // Convertit une position de l'atelier (0 → 1) en position de page
+  const scrollToProgress = (p) => {
+    const node = sectionRef.current;
+    if (!node) return;
+    const top = node.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top: top + p * (node.offsetHeight - window.innerHeight), behavior: 'smooth' });
+  };
+
   useEffect(() => {
     const node = sectionRef.current;
     if (!node || !enabled) return undefined;
-    const onScroll = () => {
+    let snapTimer = 0;
+    let touching = false;
+
+    const readProgress = () => {
       const rect = node.getBoundingClientRect();
       const span = rect.height - window.innerHeight;
-      const p = span > 0 ? Math.min(1, Math.max(0, -rect.top / span)) : 0;
+      return span > 0 ? Math.min(1, Math.max(0, -rect.top / span)) : 0;
+    };
+
+    // Quand le visiteur s'arrête entre deux projets, la caméra se pose sur le plus proche
+    const snap = () => {
+      if (touching) return;
+      const p = readProgress();
+      if (p < SNAP_ZONE[0] || p > SNAP_ZONE[1]) return;
+      const target = STOPS[nearestStop(p)];
+      const px = Math.abs(target - p) * (node.offsetHeight - window.innerHeight);
+      if (px > 4) scrollToProgress(target);
+    };
+
+    const onScroll = () => {
+      const p = readProgress();
       progressRef.current = p;
       const tl = timeline(p);
       setView((prev) => (prev.phase === tl.phase && prev.active === tl.active ? prev : { phase: tl.phase, active: tl.active }));
+      window.clearTimeout(snapTimer);
+      snapTimer = window.setTimeout(snap, 180);
     };
+    const onTouchStart = () => {
+      touching = true;
+    };
+    const onTouchEnd = () => {
+      touching = false;
+      window.clearTimeout(snapTimer);
+      snapTimer = window.setTimeout(snap, 260);
+    };
+
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
+    window.addEventListener('touchstart', onTouchStart, { passive: true });
+    window.addEventListener('touchend', onTouchEnd, { passive: true });
     return () => {
+      window.clearTimeout(snapTimer);
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
+      window.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('touchend', onTouchEnd);
     };
   }, [enabled]);
 
+  // Flèches gauche / droite : projet précédent / suivant, seulement quand l'atelier occupe l'écran
+  useEffect(() => {
+    if (!enabled) return undefined;
+    const onKey = (e) => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      if (e.target.closest?.('input, textarea, select, [contenteditable]')) return;
+      const rect = sectionRef.current?.getBoundingClientRect();
+      if (!rect || rect.top > 1 || rect.bottom < window.innerHeight - 1) return;
+      e.preventDefault();
+      step(e.key === 'ArrowRight' ? 1 : -1);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  });
+
   if (!enabled) return null;
 
-  const goTo = (k) => {
-    const node = sectionRef.current;
-    const top = node.getBoundingClientRect().top + window.scrollY;
-    window.scrollTo({ top: top + progressForProject(k) * (node.offsetHeight - window.innerHeight), behavior: 'smooth' });
-  };
+  // Avance ou recule d'un arrêt ; depuis l'entrée, « suivant » mène au premier projet
+  function step(dir) {
+    const p = progressRef.current;
+    const here = nearestStop(p);
+    let next;
+    if (p < STOPS[0] - 0.01) next = dir > 0 ? 0 : -1;
+    else next = here + dir;
+    if (next < 0) return;
+    if (next >= STOPS.length) {
+      document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    scrollToProgress(STOPS[next]);
+  }
+
+  const goTo = (k) => scrollToProgress(STOPS[k]);
+  const skip = () => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
 
   const project = view.active >= 0 ? projects[view.active] : null;
 
@@ -128,6 +196,21 @@ export default function Atelier() {
           <a href="#contact" className="btn btn--ocre" tabIndex={view.phase === 'outro' ? 0 : -1}>
             {atelier.cta}
           </a>
+        </div>
+
+        <div className="atelier__controls">
+          <button type="button" onClick={() => step(-1)} aria-label={atelier.prev} disabled={view.phase === 'intro'}>
+            <FaChevronLeft aria-hidden="true" />
+          </button>
+          <span className="atelier__count" aria-live="polite">
+            {view.phase === 'intro' ? atelier.start : view.phase === 'outro' ? atelier.end : view.active >= 0 ? `${view.active + 1} / ${projects.length}` : '·'}
+          </span>
+          <button type="button" onClick={() => step(1)} aria-label={atelier.next}>
+            <FaChevronRight aria-hidden="true" />
+          </button>
+          <button type="button" className="atelier__skip" onClick={skip}>
+            {atelier.skip} <FaArrowDown aria-hidden="true" />
+          </button>
         </div>
 
         <nav className="atelier__dots" aria-label={atelier.dotsLabel}>

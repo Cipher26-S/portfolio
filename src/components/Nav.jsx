@@ -5,6 +5,24 @@ import './Nav.css';
 export default function Nav() {
   const [open, setOpen] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [current, setCurrent] = useState('');
+
+  // Souligne dans le menu la section en cours de lecture
+  useEffect(() => {
+    const ids = navLinks.map((l) => l.href.slice(1));
+    const sections = ids.map((id) => document.getElementById(id)).filter(Boolean);
+    if (!sections.length || !('IntersectionObserver' in window)) return undefined;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setCurrent(entry.target.id);
+        });
+      },
+      { rootMargin: '-45% 0px -50% 0px' }
+    );
+    sections.forEach((node) => io.observe(node));
+    return () => io.disconnect();
+  }, []);
 
   // Le fil de progression : il « descend » le long de la page au fil de la lecture
   useEffect(() => {
@@ -44,7 +62,12 @@ export default function Nav() {
 
           <nav id="menu" className={`nav__links ${open ? 'nav__links--open' : ''}`} aria-label="Navigation principale">
             {navLinks.map((link) => (
-              <a key={link.href} href={link.href} onClick={() => setOpen(false)}>
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => setOpen(false)}
+                aria-current={current === link.href.slice(1) ? 'true' : undefined}
+              >
                 {link.label}
               </a>
             ))}
