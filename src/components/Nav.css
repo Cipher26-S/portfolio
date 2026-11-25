@@ -98,11 +98,12 @@
 .nav__links {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 24px;
 }
 
 .nav__links a:not(.btn) {
   position: relative;
+  white-space: nowrap;
   font-weight: 600;
   text-decoration: none;
   padding: 4px 0;
@@ -130,6 +131,22 @@
   padding: 10px 22px;
 }
 
+/* Bouton de langue FR / EN */
+.nav__lang {
+  padding: 6px 12px;
+  border: 2px solid var(--encre);
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.nav__lang:hover {
+  background: var(--encre);
+  color: var(--creme);
+}
+
 .nav__toggle {
   display: none;
   flex-direction: column;
@@ -155,7 +172,7 @@
   transform: translateY(-9px) rotate(-45deg);
 }
 
-@media (max-width: 860px) {
+@media (max-width: 1140px) {
   .nav__toggle {
     display: flex;
   }

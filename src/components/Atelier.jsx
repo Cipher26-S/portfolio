@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { FaGithub, FaArrowDown, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { projects, atelier } from '../data/content';
+import { useContent } from '../lib/lang';
 import { timeline, STOPS, SNAP_ZONE, nearestStop } from './atelierTimeline';
 import { projectSlug } from '../lib/slug';
 import './Atelier.css';
@@ -20,6 +20,7 @@ function canRun3D() {
 }
 
 export default function Atelier() {
+  const { projects, atelier } = useContent();
   const [enabled] = useState(canRun3D);
   const sectionRef = useRef(null);
   const progressRef = useRef(0);
@@ -145,7 +146,7 @@ export default function Atelier() {
       <div className="atelier__sticky">
         {near && (
           <Suspense fallback={<div className="atelier__loading">{atelier.loading}</div>}>
-            <AtelierScene progressRef={progressRef} active={active} />
+            <AtelierScene progressRef={progressRef} active={active} emptyFrame={atelier.emptyFrame} />
           </Suspense>
         )}
         <div className="atelier__vignette" aria-hidden="true" />

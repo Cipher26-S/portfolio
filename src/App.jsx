@@ -1,3 +1,4 @@
+import { useContent } from './lib/lang';
 import Nav from './components/Nav';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -6,13 +7,15 @@ import Projects from './components/Projects';
 import Skills from './components/Skills';
 import Journey from './components/Journey';
 import Loom from './components/Loom';
+import Offers from './components/Offers';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
 function App() {
+  const { ui } = useContent();
   return (
     <>
-      <a href="#projects" className="sr-only">Aller aux réalisations</a>
+      <a href="#projects" className="sr-only">{ui.skipToProjects}</a>
       <Nav />
       <main>
         <Hero />
@@ -21,6 +24,7 @@ function App() {
         <Projects />
         <Skills />
         <Journey />
+        <Offers />
         <Loom />
         <Contact />
       </main>

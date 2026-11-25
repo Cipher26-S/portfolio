@@ -1,10 +1,12 @@
-import { skills } from '../data/content';
+import { useContent } from '../lib/lang';
 import Reveal from './Reveal';
 import './Skills.css';
 
 const COLORS = ['var(--indigo)', 'var(--terre)', 'var(--vert)', 'var(--encre)'];
 
 export default function Skills() {
+  const { skills, ui } = useContent();
+  const t = ui.skills;
   const all = skills.flatMap((group) => group.items);
 
   return (
@@ -24,8 +26,8 @@ export default function Skills() {
 
       <div className="container section skills__inner">
         <Reveal>
-          <span className="kicker">Les fils de mon métier</span>
-          <h2 className="title">Ce que je sais <em>assembler</em>.</h2>
+          <span className="kicker">{t.kicker}</span>
+          <h2 className="title">{t.titleStart} <em>{t.titleEm}</em>{t.titleEnd}</h2>
         </Reveal>
 
         <div className="skills__grid">

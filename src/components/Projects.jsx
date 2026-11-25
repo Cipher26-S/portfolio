@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
-import { projects, projectFilters } from '../data/content';
+import { useContent } from '../lib/lang';
 import Reveal from './Reveal';
 import Weave from './Weave';
 import { projectSlug } from '../lib/slug';
@@ -26,13 +26,13 @@ function Shots({ images }) {
   );
 }
 
-function Project({ project, index }) {
+function Project({ project, index, t }) {
   return (
     <Reveal as="article" id={projectSlug(project.name)} className={`work ${index % 2 ? 'work--flip' : ''}`}>
       <div className="work__visual">
         <Weave seed={project.name} colors={project.colors} height={16} scale={3} className="work__weave" />
         <div className="work__stage" style={{ '--accent': project.colors[0] }}>
-          {project.logo && <img className="work__logo" src={project.logo} alt={`Logo ${project.name}`} loading="lazy" />}
+          {project.logo && <img className="work__logo" src={project.logo} alt={`${t.logoAlt} ${project.name}`} loading="lazy" />}
           <Shots images={project.images} />
         </div>
       </div>
@@ -47,18 +47,18 @@ function Project({ project, index }) {
             <li key={h}>{h}</li>
           ))}
         </ul>
-        <ul className="work__tech" aria-label="Technologies">
+        <ul className="work__tech" aria-label={t.techLabel}>
           {project.tech.map((t) => (
             <li key={t}>{t}</li>
           ))}
         </ul>
         <div className="work__links">
           <a href={project.github} target="_blank" rel="noreferrer" className="btn btn--light">
-            <FaGithub /> Code source
+            <FaGithub /> {t.code}
           </a>
           {project.demo && (
             <a href={project.demo} target="_blank" rel="noreferrer" className="btn btn--ocre">
-              <FaExternalLinkAlt /> Démo
+              <FaExternalLinkAlt /> {t.demo}
             </a>
           )}
         </div>
@@ -68,6 +68,8 @@ function Project({ project, index }) {
 }
 
 export default function Projects() {
+  const { projects, projectFilters, ui } = useContent();
+  const t = ui.projects;
   const [filter, setFilter] = useState('all');
   const visible = projects.filter((p) => filter === 'all' || p.categories.includes(filter));
 
@@ -76,10 +78,10 @@ export default function Projects() {
       <div className="container">
         <Reveal className="projects__head">
           <div>
-            <span className="kicker">Réalisations</span>
-            <h2 className="title">Chaque projet, <em>un pagne</em> différent.</h2>
+            <span className="kicker">{t.kicker}</span>
+            <h2 className="title">{t.titleStart} <em>{t.titleEm}</em> {t.titleEnd}</h2>
           </div>
-          <div className="projects__filters" role="group" aria-label="Filtrer les projets">
+          <div className="projects__filters" role="group" aria-label={t.filtersLabel}>
             {projectFilters.map((f) => (
               <button
                 key={f.id}
@@ -95,7 +97,7 @@ export default function Projects() {
 
         <div className="projects__list">
           {visible.map((project) => (
-            <Project key={project.name} project={project} index={projects.indexOf(project)} />
+            <Project key={project.name} project={project} index={projects.indexOf(project)} t={t} />
           ))}
         </div>
       </div>

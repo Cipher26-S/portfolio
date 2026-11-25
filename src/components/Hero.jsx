@@ -1,9 +1,11 @@
 import { FaGithub, FaLinkedin, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
-import { profile } from '../data/content';
+import { useContent } from '../lib/lang';
 import Weave from './Weave';
 import './Hero.css';
 
 export default function Hero() {
+  const { profile, ui } = useContent();
+  const t = ui.hero;
   return (
     <section id="home" className="hero">
       <Weave seed="hero-salif" height={22} />
@@ -22,16 +24,16 @@ export default function Hero() {
           </h1>
 
           <p className="hero__tagline">
-            Je <span className="hero__woven">tisse</span> du code
+            {t.taglineBefore} <span className="hero__woven">{t.taglineWord}</span> {t.taglineAfter}
             <br />
-            qui sert les gens.
+            {t.taglineLine2}
           </p>
 
           <p className="hero__lead">{profile.lead}</p>
 
           <div className="hero__actions">
-            <a href="#projects" className="btn btn--dark">Voir les réalisations</a>
-            <a href={profile.cvPath} download="CV-Sawadogo-Salif.pdf" className="btn btn--light">Télécharger le CV</a>
+            <a href="#projects" className="btn btn--dark">{t.seeWork}</a>
+            <a href={profile.cvPath} download={ui.cvFile} className="btn btn--light">{t.downloadCv}</a>
           </div>
 
           <div className="hero__socials">
@@ -43,12 +45,12 @@ export default function Hero() {
 
         <figure className="hero__portrait">
           <div className="hero__arch">
-            <img src={profile.photo} alt={`Portrait de ${profile.name}`} width="640" height="640" fetchPriority="high" />
+            <img src={profile.photo} alt={`${t.portraitAlt} ${profile.name}`} width="640" height="640" fetchPriority="high" />
           </div>
           <figcaption className="hero__label">
-            <span>Diplômé</span>
-            <strong>Licence en Informatique</strong>
-            <span>BIT · 2026</span>
+            <span>{t.labelTop}</span>
+            <strong>{t.labelMain}</strong>
+            <span>{t.labelBottom}</span>
           </figcaption>
         </figure>
       </div>

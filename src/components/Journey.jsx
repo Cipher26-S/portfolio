@@ -1,25 +1,26 @@
 import { FaBriefcase, FaGraduationCap } from 'react-icons/fa';
-import { education, experience } from '../data/content';
+import { useContent } from '../lib/lang';
 import Reveal from './Reveal';
 import './Journey.css';
 
-const entries = [
-  ...experience.map((e) => ({ ...e, kind: 'Expérience', icon: FaBriefcase })),
-  ...education.map((e) => ({ ...e, kind: 'Formation', icon: FaGraduationCap })),
-];
-
 export default function Journey() {
+  const { education, experience, ui } = useContent();
+  const t = ui.journey;
+  const entries = [
+    ...experience.map((e) => ({ ...e, kind: t.experience, icon: FaBriefcase })),
+    ...education.map((e) => ({ ...e, kind: t.education, icon: FaGraduationCap })),
+  ];
   return (
     <section id="journey" className="section journey">
       <div className="container">
         <Reveal>
-          <span className="kicker">Parcours</span>
-          <h2 className="title">Le fil, <em>nœud après nœud</em>.</h2>
+          <span className="kicker">{t.kicker}</span>
+          <h2 className="title">{t.titleStart} <em>{t.titleEm}</em>{t.titleEnd}</h2>
         </Reveal>
 
         <ol className="journey__list">
           {entries.map(({ icon: Icon, ...item }, i) => (
-            <Reveal as="li" key={item.title} className="journey__item" delay={i * 100}>
+            <Reveal as="li" key={item.period} className="journey__item" delay={i * 100}>
               <span className="journey__knot" aria-hidden="true"><Icon /></span>
               <div className="journey__card">
                 <p className="journey__meta">

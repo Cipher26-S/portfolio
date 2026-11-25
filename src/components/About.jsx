@@ -1,15 +1,17 @@
-import { profile, services } from '../data/content';
+import { useContent } from '../lib/lang';
 import Reveal from './Reveal';
 import Weave from './Weave';
 import './About.css';
 
 export default function About() {
+  const { profile, services, ui } = useContent();
+  const t = ui.about;
   return (
     <section id="about" className="about">
       <div className="container about__inner section">
         <Reveal className="about__intro">
-          <span className="kicker kicker--light">Le fil de l'histoire</span>
-          <h2 className="title">Un tisserand <em>de logiciels</em>, né à Koudougou.</h2>
+          <span className="kicker kicker--light">{t.kicker}</span>
+          <h2 className="title">{t.titleStart} <em>{t.titleEm}</em>{t.titleEnd}</h2>
         </Reveal>
 
         <div className="about__grid">

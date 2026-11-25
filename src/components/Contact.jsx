@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { FaEnvelope, FaPhone, FaGithub, FaLinkedin, FaArrowRight, FaWhatsapp, FaRegCopy, FaCheck } from 'react-icons/fa';
-import { profile } from '../data/content';
+import { useContent } from '../lib/lang';
 import Reveal from './Reveal';
 import './Contact.css';
 
 export default function Contact() {
+  const { profile, ui } = useContent();
+  const t = ui.contact;
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [copied, setCopied] = useState(false);
   const update = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
@@ -24,15 +26,15 @@ export default function Contact() {
   const sendWhatsapp = (e) => {
     const formNode = e.currentTarget.form;
     if (!formNode.reportValidity()) return;
-    const text = encodeURIComponent(`Bonjour Salif, je suis ${form.name} (${form.email}).\n\n${form.message}`);
+    const text = encodeURIComponent(`${t.whatsappIntro} ${form.name} (${form.email}).\n\n${form.message}`);
     window.open(`${profile.whatsapp}?text=${text}`, '_blank', 'noopener');
   };
 
   // Ouvre la messagerie du visiteur avec le message prérempli
   const send = (e) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Message du portfolio — ${form.name}`);
-    const body = encodeURIComponent(`${form.message}\n\n— ${form.name} (${form.email})`);
+    const subject = encodeURIComponent(`${t.subject} : ${form.name}`);
+    const body = encodeURIComponent(`${form.message}\n\n${form.name} (${form.email})`);
     window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
   };
 
@@ -40,9 +42,9 @@ export default function Contact() {
     <section id="contact" className="section contact">
       <div className="container">
         <Reveal>
-          <span className="kicker">Contact</span>
+          <span className="kicker">{t.kicker}</span>
           <h2 className="contact__title">
-            Parlons-en<span>.</span>
+            {t.title}<span>.</span>
           </h2>
           <div className="contact__mailrow">
             <a className="contact__mail" href={`mailto:${profile.email}`}>
@@ -50,7 +52,7 @@ export default function Contact() {
             </a>
             <button type="button" className="contact__copy" onClick={copyEmail}>
               {copied ? <FaCheck aria-hidden="true" /> : <FaRegCopy aria-hidden="true" />}
-              <span aria-live="polite">{copied ? 'Adresse copiée' : "Copier l'adresse"}</span>
+              <span aria-live="polite">{copied ? t.copied : t.copy}</span>
             </button>
           </div>
         </Reveal>
@@ -76,23 +78,23 @@ export default function Contact() {
 
           <Reveal as="form" className="contact__form" onSubmit={send} delay={120}>
             <label>
-              <span>Votre nom</span>
+              <span>{t.name}</span>
               <input name="name" required value={form.name} onChange={update} autoComplete="name" />
             </label>
             <label>
-              <span>Votre email</span>
+              <span>{t.email}</span>
               <input name="email" type="email" required value={form.email} onChange={update} autoComplete="email" />
             </label>
             <label className="contact__wide">
-              <span>Votre message</span>
+              <span>{t.message}</span>
               <textarea name="message" rows="5" required value={form.message} onChange={update} />
             </label>
             <div className="contact__send contact__wide">
               <button type="submit" className="btn btn--dark">
-                <FaEnvelope aria-hidden="true" /> Envoyer par email
+                <FaEnvelope aria-hidden="true" /> {t.sendEmail}
               </button>
               <button type="button" className="btn btn--whatsapp" onClick={sendWhatsapp}>
-                <FaWhatsapp aria-hidden="true" /> Envoyer sur WhatsApp
+                <FaWhatsapp aria-hidden="true" /> {t.sendWhatsapp}
               </button>
             </div>
           </Reveal>

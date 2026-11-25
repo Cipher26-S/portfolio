@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
-import { navLinks, profile } from '../data/content';
+import { useLang } from '../lib/lang';
 import './Nav.css';
 
 export default function Nav() {
+  const { lang, setLang, content } = useLang();
+  const { navLinks, profile, ui } = content;
   const [open, setOpen] = useState(false);
   const [progress, setProgress] = useState(0);
   const [current, setCurrent] = useState('');
@@ -22,7 +24,7 @@ export default function Nav() {
     );
     sections.forEach((node) => io.observe(node));
     return () => io.disconnect();
-  }, []);
+  }, [navLinks]);
 
   // Le fil de progression : il « descend » le long de la page au fil de la lecture
   useEffect(() => {
@@ -60,7 +62,7 @@ export default function Nav() {
             <span>Salif<b>.</b></span>
           </a>
 
-          <nav id="menu" className={`nav__links ${open ? 'nav__links--open' : ''}`} aria-label="Navigation principale">
+          <nav id="menu" className={`nav__links ${open ? 'nav__links--open' : ''}`} aria-label={ui.navLabel}>
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -71,14 +73,26 @@ export default function Nav() {
                 {link.label}
               </a>
             ))}
-            <a href={profile.cvPath} download="CV-Sawadogo-Salif.pdf" className="btn btn--dark nav__cv">
-              CV
+            <button
+              type="button"
+              className="nav__lang"
+              lang={lang === 'fr' ? 'en' : 'fr'}
+              aria-label={ui.langSwitchLabel}
+              onClick={() => {
+                setLang(lang === 'fr' ? 'en' : 'fr');
+                setOpen(false);
+              }}
+            >
+              {ui.langSwitch}
+            </button>
+            <a href={profile.cvPath} download={ui.cvFile} className="btn btn--dark nav__cv">
+              {ui.cv}
             </a>
           </nav>
 
           <button
             className={`nav__toggle ${open ? 'nav__toggle--open' : ''}`}
-            aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
+            aria-label={open ? ui.menuClose : ui.menuOpen}
             aria-expanded={open}
             aria-controls="menu"
             onClick={() => setOpen((v) => !v)}

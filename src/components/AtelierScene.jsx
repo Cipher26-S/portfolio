@@ -33,7 +33,7 @@ function pagneTexture(seed, colors, w = 512, h = 384) {
 }
 
 // Le cadre vide qui attend le prochain projet
-function emptyFrameTexture() {
+function emptyFrameTexture([line1, line2]) {
   const canvas = document.createElement('canvas');
   canvas.width = 640;
   canvas.height = 468;
@@ -48,9 +48,9 @@ function emptyFrameTexture() {
   ctx.fillStyle = PALETTE.encre;
   ctx.textAlign = 'center';
   ctx.font = '800 64px "Bricolage Grotesque", system-ui, sans-serif';
-  ctx.fillText('Votre projet', 320, 220);
+  ctx.fillText(line1, 320, 220);
   ctx.fillStyle = PALETTE.terre;
-  ctx.fillText('ici.', 320, 296);
+  ctx.fillText(line2, 320, 296);
   const tex = new THREE.CanvasTexture(canvas);
   tex.colorSpace = THREE.SRGBColorSpace;
   return tex;
@@ -227,7 +227,7 @@ function Weaver({ innerRef }) {
   );
 }
 
-function Room({ progressRef }) {
+function Room({ progressRef, emptyFrame }) {
   const { camera, size, scene } = useThree();
   const room = useRef();
   const weaver = useRef();
@@ -248,7 +248,7 @@ function Room({ progressRef }) {
     return map;
   }, [loaded, urls]);
 
-  const emptyTex = useMemo(() => emptyFrameTexture(), []);
+  const emptyTex = useMemo(() => emptyFrameTexture(emptyFrame), [emptyFrame]);
   const { matTex, glowTex } = useMemo(() => floorTextures(), []);
 
   const tmpPos = useMemo(() => new THREE.Vector3(), []);
@@ -344,7 +344,7 @@ function Room({ progressRef }) {
   );
 }
 
-export default function AtelierScene({ progressRef, active }) {
+export default function AtelierScene({ progressRef, active, emptyFrame }) {
   return (
     <Canvas
       className="atelier__canvas"
@@ -358,7 +358,7 @@ export default function AtelierScene({ progressRef, active }) {
       }}
     >
       <Suspense fallback={null}>
-        <Room progressRef={progressRef} />
+        <Room progressRef={progressRef} emptyFrame={emptyFrame} />
       </Suspense>
     </Canvas>
   );

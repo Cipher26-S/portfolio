@@ -2,19 +2,22 @@ import { useEffect, useRef, useState } from 'react';
 import { FaDownload, FaRandom } from 'react-icons/fa';
 import { drawPagne, PALETTE } from '../lib/weave';
 import Reveal from './Reveal';
+import { useContent } from '../lib/lang';
 import './Loom.css';
 
 const SUGGESTIONS = ['Awa', 'Moussa', 'Mamie Rasmata', 'Papa Issa', 'Koudougou'];
 
 // Palettes inspirées des pagnes : chacune donne une ambiance différente
 const PALETTES = [
-  { name: 'Indigo', colors: [PALETTE.indigo, PALETTE.ocre, PALETTE.terre, PALETTE.creme, PALETTE.nuit] },
-  { name: 'Terre', colors: [PALETTE.terre, PALETTE.encre, PALETTE.ocre, PALETTE.sable, PALETTE.vert] },
-  { name: 'Karité', colors: [PALETTE.vert, PALETTE.ocre, PALETTE.creme, PALETTE.encre, PALETTE.terre] },
-  { name: 'Nuit', colors: [PALETTE.nuit, PALETTE.indigo, PALETTE.ocre, PALETTE.sable, PALETTE.terre] },
+  { name: 'indigo', colors: [PALETTE.indigo, PALETTE.ocre, PALETTE.terre, PALETTE.creme, PALETTE.nuit] },
+  { name: 'terre', colors: [PALETTE.terre, PALETTE.encre, PALETTE.ocre, PALETTE.sable, PALETTE.vert] },
+  { name: 'karite', colors: [PALETTE.vert, PALETTE.ocre, PALETTE.creme, PALETTE.encre, PALETTE.terre] },
+  { name: 'nuit', colors: [PALETTE.nuit, PALETTE.indigo, PALETTE.ocre, PALETTE.sable, PALETTE.terre] },
 ];
 
 export default function Loom() {
+  const { ui } = useContent();
+  const t = ui.loom;
   const canvasRef = useRef(null);
   const [name, setName] = useState('Salif');
   const [palette, setPalette] = useState(0);
@@ -28,8 +31,8 @@ export default function Loom() {
 
   const download = () => {
     const link = document.createElement('a');
-    const slug = (name.trim() || 'pagne').toLowerCase().normalize('NFD').replace(/[^a-z0-9]+/g, '-');
-    link.download = `pagne-${slug}.png`;
+    const slug = (name.trim() || t.fileName).toLowerCase().normalize('NFD').replace(/[^a-z0-9]+/g, '-');
+    link.download = `${t.fileName}-${slug}.png`;
     link.href = canvasRef.current.toDataURL('image/png');
     link.click();
   };
@@ -43,27 +46,23 @@ export default function Loom() {
     <section id="loom" className="section loom">
       <div className="container loom__inner">
         <Reveal className="loom__text">
-          <span className="kicker kicker--light">Le métier à tisser</span>
-          <h2 className="title">Tissez <em>votre</em> pagne.</h2>
-          <p className="loom__lead">
-            Écrivez un prénom — le vôtre, celui de votre mère, de votre grand-père, de votre enfant.
-            Le code le transforme en un motif unique, inspiré du Faso Dan Fani. Le même prénom donne
-            toujours le même pagne.
-          </p>
+          <span className="kicker kicker--light">{t.kicker}</span>
+          <h2 className="title">{t.titleStart} <em>{t.titleEm}</em> {t.titleEnd}</h2>
+          <p className="loom__lead">{t.lead}</p>
 
           <label className="loom__field">
-            <span>Un prénom</span>
+            <span>{t.field}</span>
             <input
               value={name}
               maxLength={40}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Écrivez un prénom…"
+              placeholder={t.placeholder}
               autoComplete="off"
             />
           </label>
 
           <fieldset className="loom__palettes">
-            <legend>Couleurs</legend>
+            <legend>{t.colors}</legend>
             {PALETTES.map((p, i) => (
               <button
                 key={p.name}
@@ -73,17 +72,17 @@ export default function Loom() {
                 onClick={() => setPalette(i)}
               >
                 <span className="loom__swatch" style={{ background: `linear-gradient(90deg, ${p.colors.join(', ')})` }} />
-                {p.name}
+                {t.palettes[i]}
               </button>
             ))}
           </fieldset>
 
           <div className="loom__actions">
             <button type="button" className="btn btn--ocre" onClick={download}>
-              <FaDownload /> Télécharger mon pagne
+              <FaDownload /> {t.download}
             </button>
             <button type="button" className="btn btn--light" onClick={surprise}>
-              <FaRandom /> Surprenez-moi
+              <FaRandom /> {t.surprise}
             </button>
           </div>
         </Reveal>
@@ -94,9 +93,9 @@ export default function Loom() {
             width="640"
             height="800"
             role="img"
-            aria-label={`Pagne tissé pour ${name || 'Salif'}`}
+            aria-label={`${t.ariaFor} ${name || 'Salif'}`}
           />
-          <p className="loom__caption">Pagne de <strong>{name.trim() || 'Salif'}</strong></p>
+          <p className="loom__caption">{t.caption} <strong>{name.trim() || 'Salif'}</strong></p>
         </Reveal>
       </div>
     </section>
