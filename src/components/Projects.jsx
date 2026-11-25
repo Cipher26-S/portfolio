@@ -3,6 +3,7 @@ import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 import { projects, projectFilters } from '../data/content';
 import Reveal from './Reveal';
 import Weave from './Weave';
+import { projectSlug } from '../lib/slug';
 import './Projects.css';
 
 function Shots({ images }) {
@@ -27,7 +28,7 @@ function Shots({ images }) {
 
 function Project({ project, index }) {
   return (
-    <Reveal as="article" className={`work ${index % 2 ? 'work--flip' : ''}`}>
+    <Reveal as="article" id={projectSlug(project.name)} className={`work ${index % 2 ? 'work--flip' : ''}`}>
       <div className="work__visual">
         <Weave seed={project.name} colors={project.colors} height={16} scale={3} className="work__weave" />
         <div className="work__stage" style={{ '--accent': project.colors[0] }}>

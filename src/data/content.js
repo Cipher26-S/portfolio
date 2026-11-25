@@ -179,6 +179,23 @@ export const projects = [
   },
 ];
 
+// Texte de l'atelier 3D (section qui précède les réalisations)
+export const atelier = {
+  label: "L'atelier : les projets en 3D",
+  kicker: "L'atelier",
+  titleStart: 'Entrez dans',
+  titleEm: "l'atelier.",
+  hint: 'Faites défiler : chaque projet se décroche du mur.',
+  loading: "Ouverture de l'atelier…",
+  details: 'Voir le détail',
+  code: 'Code source',
+  outroStart: 'Votre projet,',
+  outroEm: 'le prochain pagne',
+  outroEnd: 'sur le mur.',
+  cta: 'Parlons-en',
+  dotsLabel: 'Aller à un projet',
+};
+
 export const projectFilters = [
   { id: 'all', label: 'Tous' },
   { id: 'web', label: 'Web' },

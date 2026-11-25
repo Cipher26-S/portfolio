@@ -1,0 +1,286 @@
+/* L'atelier : une longue section dont l'écran reste figé pendant que la scène 3D défile */
+.atelier {
+  position: relative;
+  height: 820vh;
+  background: var(--nuit);
+  color: var(--coton);
+  border-top: 2px solid var(--encre);
+  border-bottom: 2px solid var(--encre);
+}
+
+.atelier__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.atelier__canvas {
+  position: absolute !important;
+  inset: 0;
+}
+
+.atelier__loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--sable);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+.atelier__vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 45%, transparent 45%, rgba(10, 12, 30, 0.75) 100%),
+    linear-gradient(90deg, rgba(10, 12, 30, 0.92) 0%, rgba(10, 12, 30, 0.75) 30%, rgba(10, 12, 30, 0) 50%);
+}
+
+/* ---------- Textes superposés ---------- */
+.atelier__intro,
+.atelier__outro,
+.atelier__card {
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(24px);
+  transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1), visibility 0s linear 0.6s;
+}
+
+.atelier__intro.is-on,
+.atelier__outro.is-on,
+.atelier__card.is-on {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1), visibility 0s;
+}
+
+.atelier__intro {
+  inset: auto 0 clamp(48px, 10vh, 110px);
+  padding: 0 var(--gutter);
+  text-align: center;
+}
+
+.atelier__kicker {
+  color: var(--ocre);
+}
+
+.atelier__title {
+  color: var(--coton);
+  max-width: 16ch;
+  margin: 0 auto;
+  text-shadow: 0 4px 30px rgba(10, 12, 30, 0.8);
+}
+
+.atelier__title em {
+  color: var(--ocre);
+}
+
+.atelier__hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 22px;
+  color: var(--sable);
+  font-weight: 500;
+}
+
+.atelier__hint svg {
+  animation: atelier-bob 1.6s ease-in-out infinite;
+}
+
+@keyframes atelier-bob {
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+.atelier__card {
+  left: max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter)));
+  top: 50%;
+  width: min(420px, 38vw);
+  margin-top: -40px;
+  translate: 0 -50%;
+}
+
+.atelier__num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--ocre);
+  letter-spacing: 0.08em;
+}
+
+.atelier__num small {
+  color: var(--sable);
+  opacity: 0.6;
+  font-size: inherit;
+}
+
+.atelier__tag {
+  margin-top: 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sable);
+}
+
+.atelier__card,
+.atelier__outro {
+  text-shadow: 0 2px 18px rgba(10, 12, 30, 0.9);
+}
+
+.atelier__name {
+  margin: 8px 0 14px;
+  font-size: clamp(2rem, 3.6vw, 3.2rem);
+  color: var(--coton);
+  border-left: 6px solid var(--accent);
+  padding-left: 14px;
+}
+
+.atelier__desc {
+  color: var(--sable);
+  font-size: 1rem;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.atelier__tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0 24px;
+}
+
+.atelier__tech li {
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(244, 234, 216, 0.35);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.atelier__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.atelier__links .btn {
+  padding: 12px 22px;
+  font-size: 0.95rem;
+}
+
+.atelier .btn:hover {
+  box-shadow: 4px 4px 0 var(--ocre);
+}
+
+.atelier__ghost {
+  color: var(--coton);
+  border-color: var(--coton);
+  background: transparent;
+}
+
+.atelier__outro {
+  left: max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter)));
+  top: 50%;
+  width: min(440px, 38vw);
+  translate: 0 -50%;
+}
+
+.atelier__outro .atelier__title {
+  margin: 0;
+  font-size: clamp(2.2rem, 4.4vw, 3.8rem);
+}
+
+.atelier__outro .btn {
+  margin-top: 26px;
+}
+
+/* ---------- Points de navigation ---------- */
+.atelier__dots {
+  position: absolute;
+  right: var(--gutter);
+  top: 50%;
+  translate: 0 -50%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.atelier__dots button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--sable);
+  opacity: 0.6;
+  transition: background 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
+}
+
+.atelier__dots button.is-on {
+  background: var(--ocre);
+  border-color: var(--ocre);
+  opacity: 1;
+  transform: scale(1.3);
+}
+
+/* ---------- Mobile : le cadre en haut, le texte en bas ---------- */
+@media (max-width: 760px) {
+  .atelier {
+    height: 760vh;
+  }
+
+  .atelier__vignette {
+    background:
+      radial-gradient(ellipse at 50% 35%, transparent 40%, rgba(10, 12, 30, 0.7) 100%),
+      linear-gradient(0deg, rgba(10, 12, 30, 0.92) 0%, rgba(10, 12, 30, 0) 55%);
+  }
+
+  .atelier__card,
+  .atelier__outro {
+    left: var(--gutter);
+    right: var(--gutter);
+    top: auto;
+    bottom: 28px;
+    width: auto;
+    margin-top: 0;
+    translate: none;
+  }
+
+  .atelier__outro .atelier__title {
+    font-size: 2.2rem;
+  }
+
+  .atelier__name {
+    font-size: 1.8rem;
+    margin: 6px 0 10px;
+  }
+
+  .atelier__desc {
+    -webkit-line-clamp: 3;
+    font-size: 0.95rem;
+  }
+
+  .atelier__tech {
+    margin: 12px 0 16px;
+  }
+
+  .atelier__tech li:nth-child(n + 4) {
+    display: none;
+  }
+
+  .atelier__dots {
+    top: 84px;
+    translate: none;
+  }
+}
